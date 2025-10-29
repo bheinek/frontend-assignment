@@ -29,6 +29,7 @@ idea
 vscode
 .vscode
 .vscode/*
+.history/*
 
 # misc
 /.sass-cache

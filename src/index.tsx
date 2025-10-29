@@ -2,6 +2,7 @@ import {ChakraProvider} from '@chakra-ui/react';
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom';
 import {HelmetProvider} from 'react-helmet-async';
+import {BrowserRouter} from 'react-router-dom';
 import App from './App';
 import GlobalStyles from './GlobalStyles';
 import WebVitals from './WebVitals';
@@ -12,13 +13,15 @@ const MOUNT_NODE = document.getElementById('root');
 
 ReactDOM.render(
   <StrictMode>
-    <ChakraProvider theme={theme} resetCSS>
-      <HelmetProvider>
-        <App />
-        <GlobalStyles />
-        <WebVitals showStatusInConsoleLog />
-      </HelmetProvider>
-    </ChakraProvider>
+    <BrowserRouter>
+      <ChakraProvider theme={theme} resetCSS>
+        <HelmetProvider>
+          <App />
+          <GlobalStyles />
+          <WebVitals showStatusInConsoleLog />
+        </HelmetProvider>
+      </ChakraProvider>
+    </BrowserRouter>
   </StrictMode>,
   MOUNT_NODE
 );
