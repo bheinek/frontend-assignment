@@ -1,6 +1,45 @@
 {
-  "app.title": "Carvago Frontend Assignment",
-  "app.description": "Assignment in React.js for developers who want to join our team.",
-  "welcome.message": "Welcome to Carvago Front-End Assignment",
-  "welcome.link": "see API docs"
+  "app": {
+    "title": "Carvago Frontend Assignment",
+    "description": "Assignment in React.js for developers who want to join our team.",
+    "brand": "Zentask"
+  },
+  "welcome": {
+    "message": "Welcome to Carvago Front-End Assignment",
+    "link": "see API docs"
+  },
+  "login": {
+    "title": "It's good to have you back!",
+    "description": "Welcome to our secure portal! To access the full functionality of our app, kindly provide your credentials below. Your privacy is our priority.",
+    "username": {
+      "label": "Username",
+      "placeholder": "Enter your username"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter your password"
+    },
+    "button": "Log in"
+  },
+  "signup": {
+    "title": "Create your account",
+    "description": "Join us today! Fill in the details below to create your account and start managing your tasks efficiently.",
+    "username": {
+      "label": "Username",
+      "placeholder": "Choose a username"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter your email address"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Create a strong password"
+    },
+    "confirmPassword": {
+      "label": "Confirm Password",
+      "placeholder": "Re-enter your password"
+    },
+    "button": "Sign up"
+  }
 }

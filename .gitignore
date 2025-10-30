@@ -52,3 +52,5 @@ Thumbs.db
 *.generated.ts
 *.generated.tsx
 dev--*generated*
+
+.github/*
