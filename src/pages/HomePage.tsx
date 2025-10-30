@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 
 const API_DOCS_HREF = 'http://localhost:3001/api/docs';
 
-export function Welcome() {
+export const HomePage = () => {
   const {t} = useTranslation();
 
   return (
@@ -18,4 +18,4 @@ export function Welcome() {
       </VStack>
     </Center>
   );
-}
+};
