@@ -33,7 +33,34 @@ export const todoApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Todo'],
     }),
+    deleteTodo: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/api/todo/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Todo'],
+    }),
+    completeTodo: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/api/todo/${id}/complete`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Todo'],
+    }),
+    incompleteTodo: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/api/todo/${id}/incomplete`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Todo'],
+    }),
   }),
 });
 
-export const {useListTodosQuery, useCreateTodoMutation} = todoApi;
+export const {
+  useListTodosQuery,
+  useCreateTodoMutation,
+  useDeleteTodoMutation,
+  useCompleteTodoMutation,
+  useIncompleteTodoMutation,
+} = todoApi;
