@@ -10,7 +10,7 @@ import {
   useIncompleteTodoMutation,
   Todo,
 } from './todoApi';
-import {formatDate} from '../shared/utils/formatDate';
+import {formatDate} from '../../utils/formatDate';
 import {toaster} from '../../components/Toaster';
 import logo from '../../assets/logo.svg';
 import iconMore from '../../assets/icons/icon-more.svg';
