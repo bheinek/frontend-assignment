@@ -17,7 +17,13 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import {toaster} from '../../components/Toaster';
-import {useGetTodoQuery, useUpdateTodoMutation} from './todoApi';
+import {
+  useGetTodoQuery,
+  useUpdateTodoMutation,
+  useDeleteTodoMutation,
+  useCompleteTodoMutation,
+  useIncompleteTodoMutation,
+} from './todoApi';
 import {useGetMeQuery} from '../auth/authApi';
 import logo from '../../assets/logo.svg';
 import iconBackwards from '../../assets/icons/icon-backwards.svg';
@@ -72,6 +78,9 @@ export function TodoDetailPage() {
   const navigate = useNavigate();
   const {data: todo, isLoading} = useGetTodoQuery(id!);
   const [updateTodo, {isLoading: isUpdating}] = useUpdateTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [completeTodo] = useCompleteTodoMutation();
+  const [incompleteTodo] = useIncompleteTodoMutation();
 
   const {
     register,
@@ -106,6 +115,37 @@ export function TodoDetailPage() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteTodo(id!).unwrap();
+      navigate('/todos');
+    } catch {
+      toaster.create({
+        title: 'Error',
+        description: 'Failed to delete task',
+        type: 'error',
+        duration: 5000,
+      });
+    }
+  };
+
+  const handleToggleComplete = async () => {
+    try {
+      if (todo?.completed) {
+        await incompleteTodo(id!).unwrap();
+      } else {
+        await completeTodo(id!).unwrap();
+      }
+    } catch {
+      toaster.create({
+        title: 'Error',
+        description: 'Failed to update task status',
+        type: 'error',
+        duration: 5000,
+      });
+    }
+  };
+
   if (isLoading) {
     return (
       <Box minHeight="100vh" bg="#F1F2F6">
@@ -123,28 +163,50 @@ export function TodoDetailPage() {
 
       <Box maxWidth="800px" mx="auto" px={6} pb={8}>
         <Box bg="white" borderRadius="16px" p={8} boxShadow="sm">
-          <HStack gap={3} mb={8}>
+          <Flex justify="space-between" align="center" mb={8}>
+            <HStack gap={3}>
+              <button
+                type="button"
+                onClick={() => navigate('/todos')}
+                style={{
+                  background: 'transparent',
+                  border: '1px solid #CAD1DE',
+                  borderRadius: '50%',
+                  width: '32px',
+                  height: '32px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image src={iconBackwards} alt="Back" width="16px" height="16px" />
+              </button>
+              <Text fontSize="heading.1" fontWeight="heading.1" color="#001141">
+                {todo?.title ?? ''}
+              </Text>
+            </HStack>
             <button
               type="button"
-              onClick={() => navigate('/todos')}
+              onClick={handleToggleComplete}
               style={{
                 background: 'transparent',
-                border: '1px solid #CAD1DE',
-                borderRadius: '50%',
-                width: '32px',
-                height: '32px',
+                border: 'none',
                 cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                padding: 0,
+                flexShrink: 0,
               }}
             >
-              <Image src={iconBackwards} alt="Back" width="16px" height="16px" />
+              <Box
+                width="24px"
+                height="24px"
+                borderRadius="50%"
+                border="2px solid"
+                borderColor={todo?.completed ? '#0F62FE' : '#CAD1DE'}
+                bg={todo?.completed ? '#0F62FE' : 'transparent'}
+              />
             </button>
-            <Text fontSize="heading.1" fontWeight="heading.1" color="#001141">
-              {todo?.title ?? ''}
-            </Text>
-          </HStack>
+          </Flex>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <VStack gap={5} align="stretch">
@@ -199,18 +261,32 @@ export function TodoDetailPage() {
               </Box>
 
               <Flex justify="space-between" align="center" pt={4}>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  color="#001141"
-                  fontSize="text.base"
-                  fontWeight="text.alternative"
-                  bg="transparent"
-                  _hover={{bg: '#F1F2F6'}}
-                  onClick={() => navigate('/todos')}
-                >
-                  Discard changes
-                </Button>
+                <HStack gap={2}>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    color="#001141"
+                    fontSize="text.base"
+                    fontWeight="text.alternative"
+                    bg="transparent"
+                    _hover={{bg: '#F1F2F6'}}
+                    onClick={() => navigate('/todos')}
+                  >
+                    Discard changes
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    color="#B71C1C"
+                    fontSize="text.base"
+                    fontWeight="text.alternative"
+                    bg="transparent"
+                    _hover={{bg: '#FDE8E8'}}
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </Button>
+                </HStack>
                 <Button
                   type="submit"
                   height="44px"
