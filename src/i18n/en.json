@@ -1,6 +1,57 @@
 {
   "app.title": "Carvago Frontend Assignment",
   "app.description": "Assignment in React.js for developers who want to join our team.",
-  "welcome.message": "Welcome to Carvago Front-End Assignment",
-  "welcome.link": "see API docs"
+  "app.logo_alt": "Zentask",
+
+  "common.error": "Error",
+  "common.back": "Back",
+  "common.actions": "Actions",
+  "common.delete": "Delete",
+  "common.edit": "Edit",
+
+  "validation.required": "This field is mandatory.",
+
+  "auth.username": "Username",
+  "auth.password": "Password",
+  "auth.show_password": "Show password",
+  "auth.hide_password": "Hide password",
+
+  "auth.login.title": "It's good to have you back!",
+  "auth.login.subtitle": "Welcome to our secure portal! To access the full functionality of our app, kindly provide your credentials below. Your privacy is our priority.",
+  "auth.login.submit": "Log in \u00a0\u2192",
+  "auth.login.no_account": "Don't have an account?",
+  "auth.login.register_link": "Register",
+  "auth.login.error": "Login failed",
+
+  "auth.register.title": "Create your account",
+  "auth.register.subtitle": "Join Zentask to start organizing your tasks. Fill in your details below to get started.",
+  "auth.register.submit": "Register \u00a0\u2192",
+  "auth.register.has_account": "Already have an account?",
+  "auth.register.login_link": "Log in",
+  "auth.register.error": "Registration failed",
+
+  "todos.greeting": "Hello {{username}}!",
+  "todos.add_task": "Add task +",
+  "todos.section.todo": "To-do",
+  "todos.section.completed": "Completed",
+
+  "todos.empty.title": "You are amazing!",
+  "todos.empty.subtitle": "There is no more task to do.",
+
+  "todos.error.update": "Failed to update task",
+  "todos.error.delete": "Failed to delete task",
+  "todos.error.create": "Failed to create task",
+  "todos.error.save": "Failed to save changes",
+  "todos.error.status": "Failed to update task status",
+
+  "todos.create.heading": "New task",
+  "todos.create.task_name": "Task name",
+  "todos.create.description": "Description (Optional)",
+  "todos.create.discard": "Discard",
+  "todos.create.submit": "Create task \u00a0\u2713",
+
+  "todos.edit.task_name": "Task name",
+  "todos.edit.description": "Description (Optional)",
+  "todos.edit.discard": "Discard changes",
+  "todos.edit.submit": "Save changes \u00a0\u2713"
 }

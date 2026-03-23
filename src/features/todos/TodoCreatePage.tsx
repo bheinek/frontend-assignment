@@ -2,6 +2,7 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {useNavigate} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 import {Box, Button, Flex, HStack, Image, Input, Text, Textarea, VStack} from '@chakra-ui/react';
 import {toaster} from '../../components/Toaster';
 import {useCreateTodoMutation} from './todoApi';
@@ -9,14 +10,8 @@ import {useGetMeQuery} from '../auth/authApi';
 import logo from '../../assets/logo.svg';
 import iconBackwards from '../../assets/icons/icon-backwards.svg';
 
-const schema = yup.object({
-  title: yup.string().required('This field is mandatory.'),
-  description: yup.string().defined().default(''),
-});
-
-type CreateForm = yup.InferType<typeof schema>;
-
 function Header() {
+  const {t} = useTranslation();
   const {data: user} = useGetMeQuery();
 
   return (
@@ -29,7 +24,7 @@ function Header() {
       maxWidth="800px"
       mx="auto"
     >
-      <Image src={logo} alt="Zentask" height="24px" />
+      <Image src={logo} alt={t('app.logo_alt')} height="24px" />
       {user && (
         <HStack gap={2}>
           <Box
@@ -55,8 +50,16 @@ function Header() {
 }
 
 export function TodoCreatePage() {
+  const {t} = useTranslation();
   const navigate = useNavigate();
   const [createTodo, {isLoading}] = useCreateTodoMutation();
+
+  const schema = yup.object({
+    title: yup.string().required(t('validation.required')),
+    description: yup.string().defined().default(''),
+  });
+
+  type CreateForm = yup.InferType<typeof schema>;
 
   const {
     register,
@@ -75,8 +78,8 @@ export function TodoCreatePage() {
       navigate('/todos');
     } catch {
       toaster.create({
-        title: 'Error',
-        description: 'Failed to create task',
+        title: t('common.error'),
+        description: t('todos.error.create'),
         type: 'error',
         duration: 5000,
       });
@@ -105,10 +108,10 @@ export function TodoCreatePage() {
                 justifyContent: 'center',
               }}
             >
-              <Image src={iconBackwards} alt="Back" width="16px" height="16px" />
+              <Image src={iconBackwards} alt={t('common.back')} width="16px" height="16px" />
             </button>
             <Text fontSize="heading.1" fontWeight="heading.1" color="#001141">
-              New task
+              {t('todos.create.heading')}
             </Text>
           </HStack>
 
@@ -126,7 +129,7 @@ export function TodoCreatePage() {
                   <Text as="span" color="#E32C1E">
                     *
                   </Text>{' '}
-                  Task name
+                  {t('todos.create.task_name')}
                 </Text>
                 <Input
                   {...register('title')}
@@ -152,7 +155,7 @@ export function TodoCreatePage() {
                   color="#001141"
                   mb={1}
                 >
-                  Description (Optional)
+                  {t('todos.create.description')}
                 </Text>
                 <Textarea
                   {...register('description')}
@@ -175,7 +178,7 @@ export function TodoCreatePage() {
                   _hover={{bg: '#F1F2F6'}}
                   onClick={() => navigate('/todos')}
                 >
-                  Discard
+                  {t('todos.create.discard')}
                 </Button>
                 <Button
                   type="submit"
@@ -189,7 +192,7 @@ export function TodoCreatePage() {
                   _hover={{bg: '#0043CE'}}
                   loading={isLoading}
                 >
-                  Create task &nbsp;✓
+                  {t('todos.create.submit')}
                 </Button>
               </Flex>
             </VStack>

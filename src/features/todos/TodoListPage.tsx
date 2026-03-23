@@ -1,4 +1,5 @@
 import {useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {Box, Button, Center, Flex, HStack, Image, Spinner, Text, VStack} from '@chakra-ui/react';
 import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import {useGetMeQuery} from '../auth/authApi';
@@ -17,6 +18,7 @@ import iconEdit from '../../assets/icons/icon-edit.svg';
 import iconDelete from '../../assets/icons/icon-delete.svg';
 
 function Header() {
+  const {t} = useTranslation();
   const {data: user} = useGetMeQuery();
 
   return (
@@ -29,7 +31,7 @@ function Header() {
       maxWidth="800px"
       mx="auto"
     >
-      <Image src={logo} alt="Zentask" height="24px" />
+      <Image src={logo} alt={t('app.logo_alt')} height="24px" />
       {user && (
         <HStack gap={2}>
           <Box
@@ -55,20 +57,23 @@ function Header() {
 }
 
 function EmptyState() {
+  const {t} = useTranslation();
+
   return (
     <Center flexDirection="column" py={16}>
-      <Image src={logo} alt="Zentask" height="64px" mb={6} opacity={0.4} />
+      <Image src={logo} alt={t('app.logo_alt')} height="64px" mb={6} opacity={0.4} />
       <Text fontSize="heading.3" fontWeight="heading.2" color="#001141" mb={2}>
-        You are amazing!
+        {t('todos.empty.title')}
       </Text>
       <Text fontSize="text.base" color="#4D5667">
-        There is no more task to do.
+        {t('todos.empty.subtitle')}
       </Text>
     </Center>
   );
 }
 
 function KebabMenu({todoId, onDelete}: {todoId: string; onDelete: () => void}) {
+  const {t} = useTranslation();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -90,7 +95,7 @@ function KebabMenu({todoId, onDelete}: {todoId: string; onDelete: () => void}) {
           alignItems: 'center',
         }}
       >
-        <Image src={iconMore} alt="Actions" width="20px" height="20px" />
+        <Image src={iconMore} alt={t('common.actions')} width="20px" height="20px" />
       </button>
 
       {open && (
@@ -137,7 +142,7 @@ function KebabMenu({todoId, onDelete}: {todoId: string; onDelete: () => void}) {
               }}
             >
               <Image src={iconEdit} alt="" width="16px" height="16px" />
-              Edit
+              {t('common.edit')}
             </button>
             <button
               type="button"
@@ -160,7 +165,7 @@ function KebabMenu({todoId, onDelete}: {todoId: string; onDelete: () => void}) {
               }}
             >
               <Image src={iconDelete} alt="" width="16px" height="16px" />
-              Delete
+              {t('common.delete')}
             </button>
           </Box>
         </>
@@ -170,6 +175,7 @@ function KebabMenu({todoId, onDelete}: {todoId: string; onDelete: () => void}) {
 }
 
 function TodoItem({todo}: {todo: Todo}) {
+  const {t} = useTranslation();
   const [deleteTodo] = useDeleteTodoMutation();
   const [completeTodo] = useCompleteTodoMutation();
   const [incompleteTodo] = useIncompleteTodoMutation();
@@ -183,8 +189,8 @@ function TodoItem({todo}: {todo: Todo}) {
       }
     } catch {
       toaster.create({
-        title: 'Error',
-        description: 'Failed to update task',
+        title: t('common.error'),
+        description: t('todos.error.update'),
         type: 'error',
         duration: 5000,
       });
@@ -196,8 +202,8 @@ function TodoItem({todo}: {todo: Todo}) {
       await deleteTodo(todo.id).unwrap();
     } catch {
       toaster.create({
-        title: 'Error',
-        description: 'Failed to delete task',
+        title: t('common.error'),
+        description: t('todos.error.delete'),
         type: 'error',
         duration: 5000,
       });
@@ -243,11 +249,12 @@ function TodoItem({todo}: {todo: Todo}) {
 }
 
 export function TodoListPage() {
+  const {t} = useTranslation();
   const {data: user} = useGetMeQuery();
   const {data: todos, isLoading} = useListTodosQuery();
 
-  const incompleteTodos = todos?.filter((t) => !t.completed) ?? [];
-  const completedTodos = todos?.filter((t) => t.completed) ?? [];
+  const incompleteTodos = todos?.filter((td) => !td.completed) ?? [];
+  const completedTodos = todos?.filter((td) => td.completed) ?? [];
   const isEmpty = todos && todos.length === 0;
 
   return (
@@ -259,7 +266,7 @@ export function TodoListPage() {
           <Flex justify="space-between" align="flex-start" mb={6}>
             <Box>
               <Text fontSize="heading.1" fontWeight="heading.1" color="#001141">
-                Hello {user?.username ?? ''}!
+                {t('todos.greeting', {username: user?.username ?? ''})}
               </Text>
               <Text fontSize="text.base" color="#4D5667">
                 {formatDate(new Date())}
@@ -276,7 +283,7 @@ export function TodoListPage() {
               fontWeight="text.alternative"
               _hover={{bg: '#0043CE'}}
             >
-              <RouterLink to="/todos/new">Add task +</RouterLink>
+              <RouterLink to="/todos/new">{t('todos.add_task')}</RouterLink>
             </Button>
           </Flex>
 
@@ -293,7 +300,7 @@ export function TodoListPage() {
               {incompleteTodos.length > 0 && (
                 <Box>
                   <Text fontSize="heading.2" fontWeight="heading.2" color="#001141" mb={2}>
-                    To-do
+                    {t('todos.section.todo')}
                   </Text>
                   <VStack align="stretch" gap={0} divideY="1px" divideColor="#F1F2F6">
                     {incompleteTodos.map((todo) => (
@@ -306,7 +313,7 @@ export function TodoListPage() {
               {completedTodos.length > 0 && (
                 <Box mt={incompleteTodos.length > 0 ? 6 : 0}>
                   <Text fontSize="heading.2" fontWeight="heading.2" color="#001141" mb={2}>
-                    Completed
+                    {t('todos.section.completed')}
                   </Text>
                   <VStack align="stretch" gap={0} divideY="1px" divideColor="#F1F2F6">
                     {completedTodos.map((todo) => (

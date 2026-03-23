@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {useNavigate, useParams} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 import {
   Box,
   Button,
@@ -28,14 +29,8 @@ import {useGetMeQuery} from '../auth/authApi';
 import logo from '../../assets/logo.svg';
 import iconBackwards from '../../assets/icons/icon-backwards.svg';
 
-const schema = yup.object({
-  title: yup.string().required('This field is mandatory.'),
-  description: yup.string().defined().default(''),
-});
-
-type EditForm = yup.InferType<typeof schema>;
-
 function Header() {
+  const {t} = useTranslation();
   const {data: user} = useGetMeQuery();
 
   return (
@@ -48,7 +43,7 @@ function Header() {
       maxWidth="800px"
       mx="auto"
     >
-      <Image src={logo} alt="Zentask" height="24px" />
+      <Image src={logo} alt={t('app.logo_alt')} height="24px" />
       {user && (
         <HStack gap={2}>
           <Box
@@ -74,6 +69,7 @@ function Header() {
 }
 
 export function TodoDetailPage() {
+  const {t} = useTranslation();
   const {id} = useParams<{id: string}>();
   const navigate = useNavigate();
   const {data: todo, isLoading} = useGetTodoQuery(id!);
@@ -81,6 +77,13 @@ export function TodoDetailPage() {
   const [deleteTodo] = useDeleteTodoMutation();
   const [completeTodo] = useCompleteTodoMutation();
   const [incompleteTodo] = useIncompleteTodoMutation();
+
+  const schema = yup.object({
+    title: yup.string().required(t('validation.required')),
+    description: yup.string().defined().default(''),
+  });
+
+  type EditForm = yup.InferType<typeof schema>;
 
   const {
     register,
@@ -107,8 +110,8 @@ export function TodoDetailPage() {
       navigate('/todos');
     } catch {
       toaster.create({
-        title: 'Error',
-        description: 'Failed to save changes',
+        title: t('common.error'),
+        description: t('todos.error.save'),
         type: 'error',
         duration: 5000,
       });
@@ -121,8 +124,8 @@ export function TodoDetailPage() {
       navigate('/todos');
     } catch {
       toaster.create({
-        title: 'Error',
-        description: 'Failed to delete task',
+        title: t('common.error'),
+        description: t('todos.error.delete'),
         type: 'error',
         duration: 5000,
       });
@@ -138,8 +141,8 @@ export function TodoDetailPage() {
       }
     } catch {
       toaster.create({
-        title: 'Error',
-        description: 'Failed to update task status',
+        title: t('common.error'),
+        description: t('todos.error.status'),
         type: 'error',
         duration: 5000,
       });
@@ -180,7 +183,7 @@ export function TodoDetailPage() {
                   justifyContent: 'center',
                 }}
               >
-                <Image src={iconBackwards} alt="Back" width="16px" height="16px" />
+                <Image src={iconBackwards} alt={t('common.back')} width="16px" height="16px" />
               </button>
               <Text fontSize="heading.1" fontWeight="heading.1" color="#001141">
                 {todo?.title ?? ''}
@@ -222,7 +225,7 @@ export function TodoDetailPage() {
                   <Text as="span" color="#E32C1E">
                     *
                   </Text>{' '}
-                  Task name
+                  {t('todos.edit.task_name')}
                 </Text>
                 <Input
                   {...register('title')}
@@ -248,7 +251,7 @@ export function TodoDetailPage() {
                   color="#001141"
                   mb={1}
                 >
-                  Description (Optional)
+                  {t('todos.edit.description')}
                 </Text>
                 <Textarea
                   {...register('description')}
@@ -272,7 +275,7 @@ export function TodoDetailPage() {
                     _hover={{bg: '#F1F2F6'}}
                     onClick={() => navigate('/todos')}
                   >
-                    Discard changes
+                    {t('todos.edit.discard')}
                   </Button>
                   <Button
                     type="button"
@@ -284,7 +287,7 @@ export function TodoDetailPage() {
                     _hover={{bg: '#FDE8E8'}}
                     onClick={handleDelete}
                   >
-                    Delete
+                    {t('common.delete')}
                   </Button>
                 </HStack>
                 <Button
@@ -299,7 +302,7 @@ export function TodoDetailPage() {
                   _hover={{bg: '#0043CE'}}
                   loading={isUpdating}
                 >
-                  Save changes &nbsp;✓
+                  {t('todos.edit.submit')}
                 </Button>
               </Flex>
             </VStack>

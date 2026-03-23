@@ -4,6 +4,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {useNavigate, Link as RouterLink} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 import {Box, Button, Center, Input, Text, VStack, Link, Image} from '@chakra-ui/react';
 import {toaster} from '../../components/Toaster';
 import {useLoginMutation} from './authApi';
@@ -12,18 +13,19 @@ import logo from '../../assets/logo.svg';
 import iconShow from '../../assets/icons/icon-show.svg';
 import iconHide from '../../assets/icons/icon.hide.svg';
 
-const schema = yup.object({
-  username: yup.string().required('This field is mandatory.'),
-  password: yup.string().required('This field is mandatory.'),
-});
-
-type LoginForm = yup.InferType<typeof schema>;
-
 export function LoginPage() {
+  const {t} = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login, {isLoading}] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
+
+  const schema = yup.object({
+    username: yup.string().required(t('validation.required')),
+    password: yup.string().required(t('validation.required')),
+  });
+
+  type LoginForm = yup.InferType<typeof schema>;
 
   const {
     register,
@@ -46,10 +48,10 @@ export function LoginPage() {
     } catch (err: unknown) {
       const message =
         err && typeof err === 'object' && 'data' in err
-          ? (err as {data: {error?: string}}).data?.error || 'Login failed'
-          : 'Login failed';
+          ? (err as {data: {error?: string}}).data?.error || t('auth.login.error')
+          : t('auth.login.error');
       toaster.create({
-        title: 'Error',
+        title: t('common.error'),
         description: message,
         type: 'error',
         duration: 5000,
@@ -60,17 +62,16 @@ export function LoginPage() {
   return (
     <Center minHeight="100vh" bg="#F1F2F6" px={4}>
       <VStack gap={6} width="100%" maxWidth="460px">
-        <Image src={logo} alt="Zentask" height="32px" />
+        <Image src={logo} alt={t('app.logo_alt')} height="32px" />
 
         <Box bg="white" borderRadius="16px" p={10} width="100%" boxShadow="sm">
           <VStack gap={6} align="stretch">
             <Box>
               <Text fontSize="heading.1" fontWeight="heading.1" color="#0F62FE" mb={2}>
-                It&apos;s good to have you back!
+                {t('auth.login.title')}
               </Text>
               <Text fontSize="text.base" color="#4D5667">
-                Welcome to our secure portal! To access the full functionality of our app, kindly
-                provide your credentials below. Your privacy is our priority.
+                {t('auth.login.subtitle')}
               </Text>
             </Box>
 
@@ -88,7 +89,7 @@ export function LoginPage() {
                     <Text as="span" color="#E32C1E">
                       *
                     </Text>{' '}
-                    Username
+                    {t('auth.username')}
                   </Text>
                   <Input
                     {...register('username')}
@@ -117,7 +118,7 @@ export function LoginPage() {
                     <Text as="span" color="#E32C1E">
                       *
                     </Text>{' '}
-                    Password
+                    {t('auth.password')}
                   </Text>
                   <Box position="relative" width="100%">
                     <Input
@@ -148,7 +149,7 @@ export function LoginPage() {
                     >
                       <Image
                         src={showPassword ? iconHide : iconShow}
-                        alt={showPassword ? 'Hide password' : 'Show password'}
+                        alt={showPassword ? t('auth.hide_password') : t('auth.show_password')}
                         width="20px"
                         height="20px"
                       />
@@ -173,16 +174,16 @@ export function LoginPage() {
                   _hover={{bg: '#0043CE'}}
                   loading={isLoading}
                 >
-                  Log in &nbsp;→
+                  {t('auth.login.submit')}
                 </Button>
               </VStack>
             </form>
 
             <Center>
               <Text fontSize="text.small" color="#4D5667">
-                Don&apos;t have an account?{' '}
+                {t('auth.login.no_account')}{' '}
                 <Link asChild color="#0F62FE" fontWeight="text.alternative">
-                  <RouterLink to="/register">Register</RouterLink>
+                  <RouterLink to="/register">{t('auth.login.register_link')}</RouterLink>
                 </Link>
               </Text>
             </Center>
