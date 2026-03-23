@@ -29,6 +29,8 @@ idea
 vscode
 .vscode
 .vscode/*
+.history
+.superset
 
 # misc
 /.sass-cache
@@ -51,3 +53,8 @@ Thumbs.db
 *.generated.ts
 *.generated.tsx
 dev--*generated*
+
+# Ralph
+progress.txt
+ralph-once.sh
+afk-ralph.sh
