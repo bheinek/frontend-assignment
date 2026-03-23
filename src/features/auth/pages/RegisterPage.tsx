@@ -6,18 +6,18 @@ import {useNavigate, Link as RouterLink} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {Box, Button, Center, Input, Text, VStack, Link, Image} from '@chakra-ui/react';
-import {toaster} from '@/components/Toaster';
-import {useLoginMutation} from './authApi';
-import {credentialsSet} from './authSlice';
+import {toaster} from '@/utils/toaster';
+import {useRegisterMutation} from '../authApi';
+import {credentialsSet} from '../authSlice';
 import logo from '@/assets/logo.svg';
 import iconShow from '@/assets/icons/icon-show.svg';
 import iconHide from '@/assets/icons/icon.hide.svg';
 
-export function LoginPage() {
+export function RegisterPage() {
   const {t} = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [login, {isLoading}] = useLoginMutation();
+  const [registerUser, {isLoading}] = useRegisterMutation();
   const [showPassword, setShowPassword] = useState(false);
 
   const schema = yup.object({
@@ -25,19 +25,19 @@ export function LoginPage() {
     password: yup.string().required(t('validation.required')),
   });
 
-  type LoginForm = yup.InferType<typeof schema>;
+  type RegisterForm = yup.InferType<typeof schema>;
 
   const {
     register,
     handleSubmit,
     formState: {errors},
-  } = useForm<LoginForm>({
+  } = useForm<RegisterForm>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: LoginForm) => {
+  const onSubmit = async (data: RegisterForm) => {
     try {
-      const result = await login(data).unwrap();
+      const result = await registerUser(data).unwrap();
       dispatch(
         credentialsSet({
           accessToken: result.accessToken,
@@ -48,8 +48,8 @@ export function LoginPage() {
     } catch (err: unknown) {
       const message =
         err && typeof err === 'object' && 'data' in err
-          ? (err as {data: {error?: string}}).data?.error || t('auth.login.error')
-          : t('auth.login.error');
+          ? (err as {data: {error?: string}}).data?.error || t('auth.register.error')
+          : t('auth.register.error');
       toaster.create({
         title: t('common.error'),
         description: message,
@@ -74,10 +74,10 @@ export function LoginPage() {
           <VStack gap={6} align="stretch">
             <Box>
               <Text fontSize="heading.1" fontWeight="heading.1" color="#0F62FE" mb={2}>
-                {t('auth.login.title')}
+                {t('auth.register.title')}
               </Text>
               <Text fontSize="text.base" color="#4D5667">
-                {t('auth.login.subtitle')}
+                {t('auth.register.subtitle')}
               </Text>
             </Box>
 
@@ -180,16 +180,16 @@ export function LoginPage() {
                   _hover={{bg: '#0043CE'}}
                   loading={isLoading}
                 >
-                  {t('auth.login.submit')}
+                  {t('auth.register.submit')}
                 </Button>
               </VStack>
             </form>
 
             <Center>
               <Text fontSize="text.small" color="#4D5667">
-                {t('auth.login.no_account')}{' '}
+                {t('auth.register.has_account')}{' '}
                 <Link asChild color="#0F62FE" fontWeight="text.alternative">
-                  <RouterLink to="/register">{t('auth.login.register_link')}</RouterLink>
+                  <RouterLink to="/login">{t('auth.register.login_link')}</RouterLink>
                 </Link>
               </Text>
             </Center>

@@ -1,11 +1,11 @@
 import {createBrowserRouter, redirect, Outlet} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import {useTranslation} from 'react-i18next';
-import {LoginPage} from '@/features/auth/LoginPage';
-import {RegisterPage} from '@/features/auth/RegisterPage';
-import {TodoListPage} from '@/features/todos/TodoListPage';
-import {TodoCreatePage} from '@/features/todos/TodoCreatePage';
-import {TodoDetailPage} from '@/features/todos/TodoDetailPage';
+import {LoginPage} from '@/features/auth/pages/LoginPage';
+import {RegisterPage} from '@/features/auth/pages/RegisterPage';
+import {TodoListPage} from '@/features/todos/pages/TodoListPage';
+import {TodoCreatePage} from '@/features/todos/pages/TodoCreatePage';
+import {TodoDetailPage} from '@/features/todos/pages/TodoDetailPage';
 
 function RootLayout() {
   const {i18n, t} = useTranslation();

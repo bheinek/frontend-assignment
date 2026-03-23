@@ -1,22 +1,5 @@
 import {apiSlice} from '@/app/api';
-
-export interface Todo {
-  id: string;
-  title: string;
-  description?: string;
-  createdAt: string;
-  completed: boolean;
-  userId: string;
-}
-
-interface TodoListResponse {
-  todos: Todo[];
-}
-
-interface CreateTodoRequest {
-  title: string;
-  description?: string;
-}
+import type {Todo, TodoListResponse, CreateTodoRequest} from './types';
 
 export const todoApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

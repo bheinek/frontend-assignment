@@ -5,7 +5,7 @@ import {HelmetProvider} from 'react-helmet-async';
 import {Provider} from 'react-redux';
 import {RouterProvider} from 'react-router-dom';
 import {store} from '@/app/store';
-import {toaster} from '@/components/Toaster';
+import {toaster} from '@/utils/toaster';
 import GlobalStyles from '@/GlobalStyles';
 import WebVitals from '@/WebVitals';
 import '@/i18n/i18n';

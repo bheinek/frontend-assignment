@@ -1,16 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
-interface User {
-  id: string;
-  username: string;
-  createdAt: string;
-}
-
-interface AuthState {
-  accessToken: string | null;
-  refreshToken: string | null;
-  user: User | null;
-}
+import type {User, AuthState} from './types';
 
 const loadTokens = (): Pick<AuthState, 'accessToken' | 'refreshToken'> => {
   try {
