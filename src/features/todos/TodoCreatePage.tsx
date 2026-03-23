@@ -4,11 +4,11 @@ import * as yup from 'yup';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {Box, Button, Flex, HStack, Image, Input, Text, Textarea, VStack} from '@chakra-ui/react';
-import {toaster} from '../../components/Toaster';
+import {toaster} from '@/components/Toaster';
 import {useCreateTodoMutation} from './todoApi';
-import {useGetMeQuery} from '../auth/authApi';
-import logo from '../../assets/logo.svg';
-import iconBackwards from '../../assets/icons/icon-backwards.svg';
+import {useGetMeQuery} from '@/features/auth/authApi';
+import logo from '@/assets/logo.svg';
+import iconBackwards from '@/assets/icons/icon-backwards.svg';
 
 function Header() {
   const {t} = useTranslation();

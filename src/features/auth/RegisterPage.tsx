@@ -6,12 +6,12 @@ import {useNavigate, Link as RouterLink} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {Box, Button, Center, Input, Text, VStack, Link, Image} from '@chakra-ui/react';
-import {toaster} from '../../components/Toaster';
+import {toaster} from '@/components/Toaster';
 import {useRegisterMutation} from './authApi';
 import {credentialsSet} from './authSlice';
-import logo from '../../assets/logo.svg';
-import iconShow from '../../assets/icons/icon-show.svg';
-import iconHide from '../../assets/icons/icon.hide.svg';
+import logo from '@/assets/logo.svg';
+import iconShow from '@/assets/icons/icon-show.svg';
+import iconHide from '@/assets/icons/icon.hide.svg';
 
 export function RegisterPage() {
   const {t} = useTranslation();

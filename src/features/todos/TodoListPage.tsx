@@ -2,7 +2,7 @@ import {useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Box, Button, Center, Flex, HStack, Image, Spinner, Text, VStack} from '@chakra-ui/react';
 import {Link as RouterLink, useNavigate} from 'react-router-dom';
-import {useGetMeQuery} from '../auth/authApi';
+import {useGetMeQuery} from '@/features/auth/authApi';
 import {
   useListTodosQuery,
   useDeleteTodoMutation,
@@ -10,12 +10,12 @@ import {
   useIncompleteTodoMutation,
   Todo,
 } from './todoApi';
-import {formatDate} from '../../utils/formatDate';
-import {toaster} from '../../components/Toaster';
-import logo from '../../assets/logo.svg';
-import iconMore from '../../assets/icons/icon-more.svg';
-import iconEdit from '../../assets/icons/icon-edit.svg';
-import iconDelete from '../../assets/icons/icon-delete.svg';
+import {formatDate} from '@/utils/formatDate';
+import {toaster} from '@/components/Toaster';
+import logo from '@/assets/logo.svg';
+import iconMore from '@/assets/icons/icon-more.svg';
+import iconEdit from '@/assets/icons/icon-edit.svg';
+import iconDelete from '@/assets/icons/icon-delete.svg';
 
 function Header() {
   const {t} = useTranslation();

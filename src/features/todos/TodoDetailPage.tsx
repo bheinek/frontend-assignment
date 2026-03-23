@@ -17,7 +17,7 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react';
-import {toaster} from '../../components/Toaster';
+import {toaster} from '@/components/Toaster';
 import {
   useGetTodoQuery,
   useUpdateTodoMutation,
@@ -25,9 +25,9 @@ import {
   useCompleteTodoMutation,
   useIncompleteTodoMutation,
 } from './todoApi';
-import {useGetMeQuery} from '../auth/authApi';
-import logo from '../../assets/logo.svg';
-import iconBackwards from '../../assets/icons/icon-backwards.svg';
+import {useGetMeQuery} from '@/features/auth/authApi';
+import logo from '@/assets/logo.svg';
+import iconBackwards from '@/assets/icons/icon-backwards.svg';
 
 function Header() {
   const {t} = useTranslation();

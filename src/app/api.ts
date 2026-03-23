@@ -5,7 +5,7 @@ import {
   FetchArgs,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import {loggedOut, tokenRefreshed} from '../features/auth/authSlice';
+import {loggedOut, tokenRefreshed} from '@/features/auth/authSlice';
 import type {RootState} from './store';
 
 const baseQuery = fetchBaseQuery({
