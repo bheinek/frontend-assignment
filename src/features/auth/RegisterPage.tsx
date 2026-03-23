@@ -64,7 +64,13 @@ export function RegisterPage() {
       <VStack gap={6} width="100%" maxWidth="460px">
         <Image src={logo} alt={t('app.logo_alt')} height="32px" />
 
-        <Box bg="white" borderRadius="16px" p={10} width="100%" boxShadow="sm">
+        <Box
+          bg="white"
+          borderRadius={{base: '12px', md: '16px'}}
+          p={{base: 6, md: 10}}
+          width="100%"
+          boxShadow="sm"
+        >
           <VStack gap={6} align="stretch">
             <Box>
               <Text fontSize="heading.1" fontWeight="heading.1" color="#0F62FE" mb={2}>

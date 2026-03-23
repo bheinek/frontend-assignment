@@ -40,7 +40,12 @@ function Header() {
               {user.username.charAt(0).toUpperCase()}
             </Text>
           </Box>
-          <Text fontSize="text.small" fontWeight="text.alternative" color="#001141">
+          <Text
+            fontSize="text.small"
+            fontWeight="text.alternative"
+            color="#001141"
+            display={{base: 'none', md: 'block'}}
+          >
             {user.username}
           </Text>
         </HStack>
@@ -90,8 +95,13 @@ export function TodoCreatePage() {
     <Box minHeight="100vh" bg="#F1F2F6">
       <Header />
 
-      <Box maxWidth="800px" mx="auto" px={6} pb={8}>
-        <Box bg="white" borderRadius="16px" p={8} boxShadow="sm">
+      <Box maxWidth="800px" mx="auto" px={{base: 0, md: 6}} pb={8}>
+        <Box
+          bg="white"
+          borderRadius={{base: 0, md: '16px'}}
+          p={{base: 4, md: 8}}
+          boxShadow={{base: 'none', md: 'sm'}}
+        >
           <HStack gap={3} mb={8}>
             <button
               type="button"
