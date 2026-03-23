@@ -54,6 +54,18 @@ export const todoApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Todo'],
     }),
+    getTodo: builder.query<Todo, string>({
+      query: (id) => `/api/todo/${id}`,
+      providesTags: ['Todo'],
+    }),
+    updateTodo: builder.mutation<void, {id: string; title: string; description?: string}>({
+      query: ({id, ...body}) => ({
+        url: `/api/todo/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Todo'],
+    }),
   }),
 });
 
@@ -63,4 +75,6 @@ export const {
   useDeleteTodoMutation,
   useCompleteTodoMutation,
   useIncompleteTodoMutation,
+  useGetTodoQuery,
+  useUpdateTodoMutation,
 } = todoApi;
