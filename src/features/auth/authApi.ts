@@ -25,6 +25,13 @@ export const authApi = apiSlice.injectEndpoints({
         body: credentials,
       }),
     }),
+    register: builder.mutation<AuthResponse, LoginRequest>({
+      query: (credentials) => ({
+        url: '/api/register',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
     getMe: builder.query<UserResponse, void>({
       query: () => '/api/user/me',
       providesTags: ['User'],
@@ -32,4 +39,4 @@ export const authApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const {useLoginMutation, useGetMeQuery} = authApi;
+export const {useLoginMutation, useRegisterMutation, useGetMeQuery} = authApi;

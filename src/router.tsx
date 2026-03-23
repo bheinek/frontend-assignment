@@ -2,6 +2,7 @@ import {createBrowserRouter, redirect, Outlet} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import {useTranslation} from 'react-i18next';
 import {LoginPage} from './features/auth/LoginPage';
+import {RegisterPage} from './features/auth/RegisterPage';
 import {TodoListPage} from './features/todos/TodoListPage';
 import {TodoDetailPage} from './features/todos/TodoDetailPage';
 
@@ -45,6 +46,7 @@ export const router = createBrowserRouter([
     children: [
       {index: true, loader: () => redirect('/todos')},
       {path: 'login', element: <LoginPage />, loader: publicLoader},
+      {path: 'register', element: <RegisterPage />, loader: publicLoader},
       {path: 'todos', element: <TodoListPage />, loader: protectedLoader},
       {
         path: 'todos/:id',
