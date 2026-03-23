@@ -4,6 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {LoginPage} from './features/auth/LoginPage';
 import {RegisterPage} from './features/auth/RegisterPage';
 import {TodoListPage} from './features/todos/TodoListPage';
+import {TodoCreatePage} from './features/todos/TodoCreatePage';
 import {TodoDetailPage} from './features/todos/TodoDetailPage';
 
 function RootLayout() {
@@ -48,6 +49,7 @@ export const router = createBrowserRouter([
       {path: 'login', element: <LoginPage />, loader: publicLoader},
       {path: 'register', element: <RegisterPage />, loader: publicLoader},
       {path: 'todos', element: <TodoListPage />, loader: protectedLoader},
+      {path: 'todos/new', element: <TodoCreatePage />, loader: protectedLoader},
       {
         path: 'todos/:id',
         element: <TodoDetailPage />,
